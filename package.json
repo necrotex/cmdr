@@ -16,9 +16,8 @@
         "jquery": "^3.1.1",
         "laravel-mix": "^1.0",
         "lodash": "^4.17.4",
-        "vue": "^2.1.10"
-    },
-    "dependencies": {
-        "raphael": "^2.2.7"
+        "raphael": "^2.2.7",
+        "vue": "^2.1.10",
+        "N3-components": "^2.4.2"
     }
 }

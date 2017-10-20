@@ -1,9 +1,10 @@
 class Map {
 
-    constructor(data) {
+    constructor(data, width, height, vue) {
         this.data = data;
         this.raphael = require('raphael');
-        this.paper = this.raphael(document.getElementById('map'), 1024, 786);
+        this.paper = this.raphael(document.getElementById('map'), width, height);
+        this.vue = vue;
     }
 
     draw() {
@@ -22,8 +23,8 @@ class Map {
             let x2 = connections[i]['x2'];
             let y2 = connections[i]['y2'];
 
-            let ps = this.paper.path(`M${x1},${y1}L${x2},${y2}`);
-            ps.attr({stroke:'#C00',width:50, fill:'#c00'});
+            this.paper.path(`M${x1},${y1}L${x2},${y2}`)
+                .attr({stroke:'#C00',width:50, fill:'#c00'});
         }
     }
 
@@ -40,12 +41,12 @@ class Map {
             let name = systems[i]['name'];
             let region = systems[i]['region'];
 
-            let ts = this.paper.text(x + drawSystemOffsetX + drawSystemSize/2 + 8, y + drawSystemOffsetY - 6, name);
-            ts.attr({fill:'#000', font:'Helvetica', fontsize: 9});
+            this.paper.text(x + drawSystemOffsetX + drawSystemSize/2 + 8, y + drawSystemOffsetY - 6, name)
+                .attr({fill:'#000', font:'Helvetica', fontsize: 9});
 
             if (region != undefined) {
-                let rts = this.paper.text(x + drawSystemOffsetX + drawSystemSize/2 + 8, y + drawSystemOffsetY - 6, region);
-                rts.attr({fill:'#00f', font:'Helvetica', fontsize: 9});
+                this.paper.text(x + drawSystemOffsetX + drawSystemSize/2 + 8, y + drawSystemOffsetY - 6, region)
+                    .attr({fill:'#00f', font:'Helvetica', fontsize: 9});
             }
 
         }
@@ -68,12 +69,19 @@ class Map {
 
 
             if (stn) {
-                let ss = this.paper.rect(x + drawSystemOffsetX - drawSystemSize/2, y + drawSystemOffsetY  - drawSystemSize/2, drawSystemSize, drawSystemSize);
-                ss.attr({fill: '#000'});
+                let sys = this.paper.rect(x + drawSystemOffsetX - drawSystemSize/2, y + drawSystemOffsetY  - drawSystemSize/2, drawSystemSize, drawSystemSize)
+                    .attr({fill: '#000'})
+                    .click(() => {
+                        this.vue.openInfoPanel();
+                    });
             } else {
-                let ns = this.paper.circle(x + drawSystemOffsetX, y + drawSystemOffsetY, drawSystemSize/2);
-                ns.attr({fill: '#00f'});
+                let sys = this.paper.circle(x + drawSystemOffsetX, y + drawSystemOffsetY, drawSystemSize/2)
+                    .attr({fill: '#00f'})
+                    .click(() => {
+                        this.vue.openInfoPanel();
+                    });
             }
+
         }
     }
 

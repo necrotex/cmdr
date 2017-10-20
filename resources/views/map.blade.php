@@ -10,15 +10,31 @@
     <link rel="stylesheet" href="{{mix('css/app.css')}}">
 </head>
 <body>
-<div class="flex-center position-ref full-height">
 
-    <div class="content">
-        <div id="app">
-            <dotlan-map></dotlan-map>
-        </div>
-    </div>
+<div id="app">
+    <n3-container fluid class="container">
+        <n3-row>
+            <n3-column :col="9" class="context map-grid">
+                <dotlan-map></dotlan-map>
+            </n3-column>
+            <n3-column :col="3" class="context">
+                Nothing
+            </n3-column>
+        </n3-row>
+    </n3-container>
 
-    <script src="{{mix('js/app.js')}}"></script>
+    <n3-aside  placement="left" title="Title" width="350px" ref="asideLeft" id="info-panel">
+        <h4>left</h4>
+        <p>...</p>
+        <p>...</p>
+        <p>...</p>
+        <n3-button @click.native="closeInfoPanel">close</n3-button>
+    </n3-aside>
+
+
 </div>
+
+<script src="{{mix('js/app.js')}}"></script>
+
 </body>
 </html>
